@@ -18,9 +18,9 @@ const Intro = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="min-h-screen flex items-center justify-center p-4"
+      className="min-h-screen flex items-center justify-center p-4 sm:p-6"
     >
-      <div className="cozy-card max-w-md w-full text-center">
+      <div className="cozy-card max-w-md sm:max-w-lg w-full text-center">
         {/* Music Toggle */}
         <button
           onClick={toggleMusic}

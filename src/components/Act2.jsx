@@ -61,10 +61,10 @@ const Act2 = () => {
 
   if (showResult) {
     return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="min-h-screen flex items-center justify-center p-4"
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="min-h-screen flex items-center justify-center p-4 sm:p-6"
       >
         <div className="cozy-card max-w-md w-full text-center">
           <motion.div
@@ -101,7 +101,7 @@ const Act2 = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="min-h-screen flex items-center justify-center p-4"
+      className="min-h-screen flex items-center justify-center p-4 sm:p-6"
     >
       <div className="cozy-card max-w-lg w-full">
         <motion.h2
@@ -144,7 +144,7 @@ const Act2 = () => {
                     initial={{ scale: 0.8 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: rowIndex * 0.1 + colIndex * 0.05 }}
-                    className={`w-12 h-12 border-2 rounded-lg flex items-center justify-center font-bold text-lg ${
+                    className={`w-10 h-10 sm:w-12 sm:h-12 border-2 rounded-lg flex items-center justify-center font-bold text-base sm:text-lg ${
                       status === 'correct' 
                         ? 'bg-green-500 text-white border-green-500'
                         : status === 'present'
@@ -168,7 +168,7 @@ const Act2 = () => {
             {[...Array(3)].map((_, index) => (
               <div
                 key={index}
-                className="w-12 h-12 border-2 border-cozy-purple rounded-lg flex items-center justify-center font-bold text-lg bg-cozy-purple/10"
+                className="w-10 h-10 sm:w-12 sm:h-12 border-2 border-cozy-purple rounded-lg flex items-center justify-center font-bold text-base sm:text-lg bg-cozy-purple/10"
               >
                 {currentGuess[index] || ''}
               </div>
@@ -178,15 +178,15 @@ const Act2 = () => {
 
         {/* Keyboard */}
         {!isSolved && guesses.length < maxAttempts && (
-          <div className="space-y-2">
-            <div className="flex gap-1 justify-center">
-              {['B', 'A', 'Y'].map(letter => (
+          <div className="space-y-3">
+            <div className="flex gap-1 justify-center flex-wrap">
+              {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'].map(letter => (
                 <motion.button
                   key={letter}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleKeyPress(letter)}
-                  className="w-10 h-10 bg-cozy-purple text-white rounded-lg font-bold hover:bg-cozy-purple/80 transition-colors"
+                  className="w-8 h-8 sm:w-10 sm:h-10 bg-cozy-purple text-white rounded-lg font-bold hover:bg-cozy-purple/80 transition-colors text-sm sm:text-base"
                 >
                   {letter}
                 </motion.button>
@@ -198,7 +198,7 @@ const Act2 = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleBackspace}
-                className="px-4 py-2 bg-gray-500 text-white rounded-lg font-bold hover:bg-gray-600 transition-colors"
+                className="px-3 py-2 sm:px-4 sm:py-2 bg-gray-500 text-white rounded-lg font-bold hover:bg-gray-600 transition-colors text-sm sm:text-base"
               >
                 ⌫
               </motion.button>
@@ -207,7 +207,7 @@ const Act2 = () => {
                 whileTap={{ scale: 0.95 }}
                 onClick={handleSubmit}
                 disabled={currentGuess.length !== 3}
-                className="px-4 py-2 bg-cozy-pink text-white rounded-lg font-bold hover:bg-cozy-pink/80 transition-colors disabled:opacity-50"
+                className="px-3 py-2 sm:px-4 sm:py-2 bg-cozy-pink text-white rounded-lg font-bold hover:bg-cozy-pink/80 transition-colors disabled:opacity-50 text-sm sm:text-base"
               >
                 Enter
               </motion.button>

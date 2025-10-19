@@ -71,19 +71,14 @@ const AppContent = () => {
         ))}
       </div>
 
-      {/* Main content */}
-      <div className="relative z-10">
-        {renderCurrentAct()}
-      </div>
-
       {/* Progress indicator */}
-      <div className="fixed bottom-4 left-4 right-4 z-20">
-        <div className="bg-white/80 backdrop-blur-sm rounded-full p-2">
+      <div className="fixed top-4 left-4 right-4 z-20">
+        <div className="bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg">
           <div className="flex justify-center space-x-2">
             {[0, 1, 2, 3, 4].map((act) => (
               <div
                 key={act}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${
                   act <= currentAct
                     ? 'bg-cozy-purple'
                     : 'bg-gray-300'
@@ -94,8 +89,13 @@ const AppContent = () => {
         </div>
       </div>
 
+      {/* Main content */}
+      <div className="relative z-10 pt-16">
+        {renderCurrentAct()}
+      </div>
+
       {/* Easter egg hearts */}
-      <div className="fixed top-4 left-4 z-20">
+      <div className="fixed top-16 left-4 z-20">
         <button
           onClick={() => {
             // Create floating hearts animation
@@ -105,7 +105,7 @@ const AppContent = () => {
                 heart.innerHTML = '💖'
                 heart.className = 'fixed text-2xl pointer-events-none z-50'
                 heart.style.left = `${20 + Math.random() * 60}%`
-                heart.style.top = '20px'
+                heart.style.top = '80px'
                 heart.style.animation = 'confetti 2s ease-out forwards'
                 document.body.appendChild(heart)
                 

@@ -11,25 +11,25 @@ const Act1 = () => {
   const dinnerOptions = [
     {
       id: 'red-oolong',
-      name: 'Red Oolong Noodle Bar',
+      name: 'A Cozy Noodle Spot',
       clues: ['Warm, savory, handmade noodles 🍜', 'Hidden gem downtown 👀', 'Perfect for cozy date night 💕'],
       correct: true
     },
     {
       id: 'sushi',
-      name: 'Sushi Ota',
+      name: 'Fresh Fish Place',
       clues: ['Fresh fish, traditional style 🍣', 'Popular spot in Mission Hills 🏔️'],
       correct: false
     },
     {
       id: 'italian',
-      name: 'Cucina Urbana',
+      name: 'Italian Comfort',
       clues: ['Italian comfort food 🍝', 'Rustic atmosphere 🏠'],
       correct: false
     },
     {
       id: 'mexican',
-      name: 'Casa Guadalajara',
+      name: 'Spicy Flavors',
       clues: ['Authentic Mexican flavors 🌶️', 'Colorful decor 🎨'],
       correct: false
     }
@@ -55,10 +55,10 @@ const Act1 = () => {
 
   if (isCorrect) {
     return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="min-h-screen flex items-center justify-center p-4"
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="min-h-screen flex items-center justify-center p-4 sm:p-6"
       >
         <div className="cozy-card max-w-md w-full text-center">
           <motion.div
@@ -70,7 +70,7 @@ const Act1 = () => {
           </motion.div>
           
           <h2 className="text-3xl font-bold text-cozy-purple mb-4">
-            Yay! We're off to Red Oolong Noodle Bar! 🍜
+            Yay! We're off to our cozy noodle spot! 🍜
           </h2>
           
           <p className="text-lg text-gray-700 mb-6">
@@ -95,7 +95,7 @@ const Act1 = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="min-h-screen flex items-center justify-center p-4"
+      className="min-h-screen flex items-center justify-center p-4 sm:p-6"
     >
       <div className="cozy-card max-w-lg w-full">
         <motion.h2
