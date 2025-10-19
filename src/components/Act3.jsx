@@ -180,13 +180,11 @@ const Act3 = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.7 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             onClick={() => handleOptionSelect('game')}
             className={`w-full p-6 rounded-2xl border-2 transition-all duration-300 ${
               selectedOption === 'game'
                 ? 'border-cozy-pink bg-cozy-pink/20'
-                : 'border-gray-200 hover:border-cozy-purple hover:bg-cozy-purple/10'
+                : 'border-gray-200'
             }`}
           >
             <div className="text-4xl mb-3">🎮</div>
@@ -200,13 +198,11 @@ const Act3 = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.8 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             onClick={() => handleOptionSelect('movie')}
             className={`w-full p-6 rounded-2xl border-2 transition-all duration-300 ${
               selectedOption === 'movie'
                 ? 'border-cozy-pink bg-cozy-pink/20'
-                : 'border-gray-200 hover:border-cozy-purple hover:bg-cozy-purple/10'
+                : 'border-gray-200'
             }`}
           >
             <div className="text-4xl mb-3">🎬</div>
@@ -224,7 +220,7 @@ const Act3 = () => {
             className="mt-6 p-4 bg-gradient-to-r from-cozy-pink to-cozy-purple text-white rounded-lg"
           >
             <p className="text-center font-semibold">
-              {selectedOption === 'game' ? '🎮 Game Night Selected!' : '🎬 Movie Mode Selected!'}
+              Perfect choice! 💕
             </p>
             <p className="text-center text-sm mt-1 opacity-90">
               {selectedOption === 'game' 

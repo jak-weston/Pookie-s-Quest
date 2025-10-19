@@ -48,13 +48,83 @@ const Ending = () => {
     }
   }
 
-  const downloadPhoto = () => {
-    if (canvasRef.current) {
-      const link = document.createElement('a')
-      link.download = 'pookie-cozy-quest.png'
-      link.href = canvasRef.current.toDataURL()
-      link.click()
-    }
+  const downloadAllPhotos = () => {
+    if (photos.length === 0) return
+    
+    const today = new Date()
+    const dateString = today.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+    
+    // Create a zip-like download (we'll create individual downloads with filters)
+    photos.forEach((photo, index) => {
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      const img = new Image()
+      
+      img.onload = () => {
+        canvas.width = img.width
+        canvas.height = img.height
+        
+        // Draw original image
+        ctx.drawImage(img, 0, 0)
+        
+        // Add cute filter based on act
+        let filterColor = 'rgba(255, 182, 193, 0.3)' // Default pink
+        let emoji = '💕'
+        let actName = 'Memory'
+        
+        switch(photo.act) {
+          case 'outfit':
+            filterColor = 'rgba(139, 69, 19, 0.2)' // Chocolate brown
+            emoji = '🍫'
+            actName = 'Outfit'
+            break
+          case 'dinner':
+            filterColor = 'rgba(255, 215, 0, 0.2)' // Golden
+            emoji = '🍜'
+            actName = 'Dinner'
+            break
+          case 'bay':
+            filterColor = 'rgba(135, 206, 235, 0.2)' // Sky blue
+            emoji = '🌊'
+            actName = 'Bay'
+            break
+          case 'finale':
+            filterColor = 'rgba(255, 192, 203, 0.2)' // Light pink
+            emoji = '🎮'
+            actName = 'Finale'
+            break
+        }
+        
+        // Apply filter
+        ctx.fillStyle = filterColor
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        
+        // Add cute border
+        ctx.strokeStyle = '#8B4A8B'
+        ctx.lineWidth = 20
+        ctx.strokeRect(0, 0, canvas.width, canvas.height)
+        
+        // Add text overlay
+        ctx.fillStyle = '#8B4A8B'
+        ctx.font = 'bold 48px Poppins'
+        ctx.textAlign = 'center'
+        ctx.fillText(`${emoji} ${actName}`, canvas.width / 2, 80)
+        ctx.fillText(`Pookie's Cozy Quest`, canvas.width / 2, canvas.height - 100)
+        ctx.fillText(`${dateString}`, canvas.width / 2, canvas.height - 50)
+        
+        // Download
+        const link = document.createElement('a')
+        link.download = `pookie-cozy-quest-${actName.toLowerCase()}-${dateString.replace(/\s+/g, '-')}.png`
+        link.href = canvas.toDataURL()
+        link.click()
+      }
+      
+      img.src = photo.dataUrl
+    })
   }
 
   const handleBack = () => {
@@ -141,10 +211,20 @@ const Ending = () => {
               <p className="font-semibold text-lg">Quest Complete! 💕</p>
             </div>
 
-            {/* Photo Gallery */}
-            {photos.length > 0 && (
-              <div className="bg-white/80 rounded-lg p-4 mb-6">
-                <h3 className="font-semibold text-gray-800 mb-3 text-center">📸 Quest Memories</h3>
+                  {/* Photo Gallery */}
+                  {photos.length > 0 && (
+                    <div className="bg-white/80 rounded-lg p-4 mb-6">
+                      <div className="flex justify-between items-center mb-3">
+                        <h3 className="font-semibold text-gray-800 text-center flex-1">📸 Quest Memories</h3>
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={downloadAllPhotos}
+                          className="ml-3 px-3 py-1 bg-cozy-purple text-white rounded-lg text-sm font-semibold hover:bg-cozy-purple/80 transition-colors"
+                        >
+                          📥 Download All
+                        </motion.button>
+                      </div>
                 <div className="grid grid-cols-1 gap-3">
                   {photos.map((photo, index) => (
                     <motion.div
@@ -225,7 +305,7 @@ const Ending = () => {
               onClick={resetQuest}
               className="w-full py-3 px-6 bg-gray-500 text-white font-semibold rounded-full hover:bg-gray-600 transition-colors"
             >
-              🔄 Start New Quest
+              💕 Plan Next Adventure
             </motion.button>
           </motion.div>
 
