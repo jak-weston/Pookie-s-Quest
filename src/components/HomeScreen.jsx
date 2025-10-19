@@ -150,7 +150,7 @@ const HomeScreen = () => {
               onClick={handleStartQuest}
               className="cozy-button w-full text-xl py-4"
             >
-              Take Photo of Your Outfit 📸
+              Upload Photo to Get Started 📸
             </motion.button>
           ) : (
             <div className="space-y-3">

@@ -116,9 +116,9 @@ const Act1 = () => {
                 onClick={handleArrived}
                 className="cozy-button w-full text-xl py-4"
               >
-                Arrived & Ate! 🍽️
+                Upload Photo 📸
               </motion.button>
-          ) : (
+            ) : (
             <div className="space-y-3">
               <p className="text-center text-gray-600">Want to capture this moment? 📸</p>
               <motion.button
@@ -189,11 +189,11 @@ const Act1 = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.7 + index * 0.1 }}
-              className={`w-full p-3 rounded-lg border-2 transition-all duration-300 ${
-                selectedAnswer === option.id
-                  ? 'border-cozy-pink bg-cozy-pink/20'
-                  : 'border-gray-200 hover:border-cozy-purple hover:bg-cozy-purple/10'
-              }`}
+                      className={`w-full p-3 rounded-lg border-2 transition-all duration-300 ${
+                        selectedAnswer === option.id
+                          ? 'border-cozy-pink bg-cozy-pink/20'
+                          : 'border-gray-200'
+                      }`}
             >
               <button
                 onClick={() => handleAnswerSelect(option)}

@@ -160,7 +160,7 @@ const Ending = () => {
                         className="w-full rounded-lg shadow-md"
                       />
                       <div className="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                        {photo.act === 'outfit' ? '👗 Outfit' : photo.act === 'dinner' ? '🍜 Dinner' : photo.act === 'bay' ? '🌊 Bay' : '📸 Memory'}
+                        {photo.act === 'outfit' ? '👗 Outfit' : photo.act === 'dinner' ? '🍜 Dinner' : photo.act === 'bay' ? '🌊 Bay' : photo.act === 'finale' ? '🎮 Finale' : '📸 Memory'}
                       </div>
                     </motion.div>
                   ))}
@@ -175,7 +175,7 @@ const Ending = () => {
                 onClick={() => setCurrentAct(5)}
                 className="cozy-button w-full text-xl py-4 mb-4"
               >
-                📸 Photo Booth Memory
+                Rate Our Date ⭐
               </motion.button>
             ) : (
               <div className="space-y-4">

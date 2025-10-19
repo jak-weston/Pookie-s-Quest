@@ -127,7 +127,7 @@ const Act2 = () => {
               onClick={handleArrived}
               className="cozy-button w-full text-xl py-4"
             >
-              We've arrived! 🌟
+              Upload Photo 📸
             </motion.button>
           ) : (
             <div className="space-y-3">
@@ -238,71 +238,71 @@ const Act2 = () => {
           </div>
         )}
 
-        {/* Keyboard */}
-        {!isSolved && guesses.length < maxAttempts && (
-          <div className="space-y-3">
-            {/* QWERTY Layout */}
-            <div className="flex gap-1 justify-center flex-wrap">
-              {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map(letter => (
-                <motion.button
-                  key={letter}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => handleKeyPress(letter)}
-                  className="w-8 h-8 sm:w-10 sm:h-10 bg-cozy-purple text-white rounded-lg font-bold hover:bg-cozy-purple/80 transition-colors text-sm sm:text-base"
-                >
-                  {letter}
-                </motion.button>
-              ))}
-            </div>
-            <div className="flex gap-1 justify-center flex-wrap">
-              {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'].map(letter => (
-                <motion.button
-                  key={letter}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => handleKeyPress(letter)}
-                  className="w-8 h-8 sm:w-10 sm:h-10 bg-cozy-purple text-white rounded-lg font-bold hover:bg-cozy-purple/80 transition-colors text-sm sm:text-base"
-                >
-                  {letter}
-                </motion.button>
-              ))}
-            </div>
-            <div className="flex gap-1 justify-center flex-wrap">
-              {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map(letter => (
-                <motion.button
-                  key={letter}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => handleKeyPress(letter)}
-                  className="w-8 h-8 sm:w-10 sm:h-10 bg-cozy-purple text-white rounded-lg font-bold hover:bg-cozy-purple/80 transition-colors text-sm sm:text-base"
-                >
-                  {letter}
-                </motion.button>
-              ))}
-            </div>
-            
-            <div className="flex gap-2 justify-center">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleBackspace}
-                className="px-3 py-2 sm:px-4 sm:py-2 bg-gray-500 text-white rounded-lg font-bold hover:bg-gray-600 transition-colors text-sm sm:text-base"
-              >
-                ⌫
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleSubmit}
-                disabled={currentGuess.length !== 3}
-                className="px-3 py-2 sm:px-4 sm:py-2 bg-cozy-pink text-white rounded-lg font-bold hover:bg-cozy-pink/80 transition-colors disabled:opacity-50 text-sm sm:text-base"
-              >
-                Enter
-              </motion.button>
-            </div>
-          </div>
-        )}
+                {/* Keyboard */}
+                {!isSolved && guesses.length < maxAttempts && (
+                  <div className="space-y-2">
+                    {/* QWERTY Layout */}
+                    <div className="flex gap-1 justify-center flex-wrap">
+                      {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map(letter => (
+                        <motion.button
+                          key={letter}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handleKeyPress(letter)}
+                          className="w-6 h-6 sm:w-8 sm:h-8 bg-cozy-purple text-white rounded font-bold hover:bg-cozy-purple/80 transition-colors text-xs sm:text-sm"
+                        >
+                          {letter}
+                        </motion.button>
+                      ))}
+                    </div>
+                    <div className="flex gap-1 justify-center flex-wrap">
+                      {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'].map(letter => (
+                        <motion.button
+                          key={letter}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handleKeyPress(letter)}
+                          className="w-6 h-6 sm:w-8 sm:h-8 bg-cozy-purple text-white rounded font-bold hover:bg-cozy-purple/80 transition-colors text-xs sm:text-sm"
+                        >
+                          {letter}
+                        </motion.button>
+                      ))}
+                    </div>
+                    <div className="flex gap-1 justify-center flex-wrap">
+                      {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map(letter => (
+                        <motion.button
+                          key={letter}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handleKeyPress(letter)}
+                          className="w-6 h-6 sm:w-8 sm:h-8 bg-cozy-purple text-white rounded font-bold hover:bg-cozy-purple/80 transition-colors text-xs sm:text-sm"
+                        >
+                          {letter}
+                        </motion.button>
+                      ))}
+                    </div>
+                    
+                    <div className="flex gap-2 justify-center">
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleBackspace}
+                        className="px-2 py-1 sm:px-3 sm:py-2 bg-gray-500 text-white rounded font-bold hover:bg-gray-600 transition-colors text-xs sm:text-sm"
+                      >
+                        ⌫
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleSubmit}
+                        disabled={currentGuess.length !== 3}
+                        className="px-2 py-1 sm:px-3 sm:py-2 bg-cozy-pink text-white rounded font-bold hover:bg-cozy-pink/80 transition-colors disabled:opacity-50 text-xs sm:text-sm"
+                      >
+                        Enter
+                      </motion.button>
+                    </div>
+                  </div>
+                )}
 
         {guesses.length >= maxAttempts && !isSolved && (
           <motion.div
