@@ -9,6 +9,7 @@ const Act2 = () => {
   const [isSolved, setIsSolved] = useState(false)
   const [showResult, setShowResult] = useState(false)
   const [showPhotoOption, setShowPhotoOption] = useState(false)
+  const [usedLetters, setUsedLetters] = useState({})
   const fileInputRef = useRef(null)
 
   const targetWord = 'BAY'
@@ -41,6 +42,16 @@ const Act2 = () => {
       const newGuesses = [...guesses, guessArray]
       setGuesses(newGuesses)
       setWordleAttempts(newGuesses)
+      
+      // Update used letters
+      const newUsedLetters = { ...usedLetters }
+      guessArray.forEach((letter, index) => {
+        const status = getLetterStatus(letter, guesses.length, index)
+        if (!newUsedLetters[letter] || newUsedLetters[letter] === 'absent') {
+          newUsedLetters[letter] = status
+        }
+      })
+      setUsedLetters(newUsedLetters)
       
       if (currentGuess === targetWord) {
         setIsSolved(true)
@@ -249,7 +260,15 @@ const Act2 = () => {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => handleKeyPress(letter)}
-                          className="w-6 h-6 sm:w-8 sm:h-8 bg-cozy-purple text-white rounded font-bold hover:bg-cozy-purple/80 transition-colors text-xs sm:text-sm"
+                          className={`w-6 h-6 sm:w-8 sm:h-8 rounded font-bold transition-colors text-xs sm:text-sm ${
+                            usedLetters[letter] === 'correct' 
+                              ? 'bg-green-500 text-white'
+                              : usedLetters[letter] === 'present'
+                              ? 'bg-yellow-500 text-white'
+                              : usedLetters[letter] === 'absent'
+                              ? 'bg-gray-500 text-white'
+                              : 'bg-cozy-purple text-white hover:bg-cozy-purple/80'
+                          }`}
                         >
                           {letter}
                         </motion.button>
@@ -262,7 +281,15 @@ const Act2 = () => {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => handleKeyPress(letter)}
-                          className="w-6 h-6 sm:w-8 sm:h-8 bg-cozy-purple text-white rounded font-bold hover:bg-cozy-purple/80 transition-colors text-xs sm:text-sm"
+                          className={`w-6 h-6 sm:w-8 sm:h-8 rounded font-bold transition-colors text-xs sm:text-sm ${
+                            usedLetters[letter] === 'correct' 
+                              ? 'bg-green-500 text-white'
+                              : usedLetters[letter] === 'present'
+                              ? 'bg-yellow-500 text-white'
+                              : usedLetters[letter] === 'absent'
+                              ? 'bg-gray-500 text-white'
+                              : 'bg-cozy-purple text-white hover:bg-cozy-purple/80'
+                          }`}
                         >
                           {letter}
                         </motion.button>
@@ -275,7 +302,15 @@ const Act2 = () => {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => handleKeyPress(letter)}
-                          className="w-6 h-6 sm:w-8 sm:h-8 bg-cozy-purple text-white rounded font-bold hover:bg-cozy-purple/80 transition-colors text-xs sm:text-sm"
+                          className={`w-6 h-6 sm:w-8 sm:h-8 rounded font-bold transition-colors text-xs sm:text-sm ${
+                            usedLetters[letter] === 'correct' 
+                              ? 'bg-green-500 text-white'
+                              : usedLetters[letter] === 'present'
+                              ? 'bg-yellow-500 text-white'
+                              : usedLetters[letter] === 'absent'
+                              ? 'bg-gray-500 text-white'
+                              : 'bg-cozy-purple text-white hover:bg-cozy-purple/80'
+                          }`}
                         >
                           {letter}
                         </motion.button>

@@ -100,11 +100,13 @@ const Questionnaire = () => {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setRating(star)}
-                  className={`text-4xl transition-colors ${
-                    star <= rating ? 'text-yellow-400' : 'text-gray-300'
+                  className={`w-12 h-12 rounded-full font-bold text-xl transition-colors ${
+                    star <= rating 
+                      ? 'bg-yellow-400 text-white' 
+                      : 'bg-gray-200 text-gray-600'
                   }`}
                 >
-                  ⭐
+                  {star}
                 </motion.button>
               ))}
             </div>

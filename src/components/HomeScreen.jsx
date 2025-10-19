@@ -4,13 +4,8 @@ import { useQuest } from '../context/QuestContext'
 
 const HomeScreen = () => {
   const { completeAct, addPhoto } = useQuest()
-  const [showPhotoOption, setShowPhotoOption] = useState(false)
   const [photoTaken, setPhotoTaken] = useState(false)
   const fileInputRef = useRef(null)
-
-  const handleStartQuest = () => {
-    setShowPhotoOption(true)
-  }
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0]
@@ -142,29 +137,14 @@ const HomeScreen = () => {
           transition={{ delay: 0.9 }}
           className="space-y-4"
         >
-
-          {!showPhotoOption ? (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleStartQuest}
-              className="cozy-button w-full text-xl py-4"
-            >
-              Upload Photo to Get Started 📸
-            </motion.button>
-          ) : (
-            <div className="space-y-3">
-              <p className="text-center text-gray-600">Upload a photo of your amazing outfit! 📸</p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleUploadClick}
-                className="w-full py-3 px-4 bg-cozy-pink text-white rounded-lg font-semibold hover:bg-cozy-pink/80 transition-colors"
-              >
-                📸 Upload Photo
-              </motion.button>
-            </div>
-          )}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleUploadClick}
+            className="cozy-button w-full text-xl py-4"
+          >
+            Upload Photo to Get Started 📸
+          </motion.button>
 
           {/* Hidden file input */}
           <input

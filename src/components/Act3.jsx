@@ -7,11 +7,15 @@ const Act3 = () => {
   const [selectedOption, setSelectedOption] = useState('')
   const [showConfetti, setShowConfetti] = useState(false)
   const [showPhotoOption, setShowPhotoOption] = useState(false)
+  const [isCorrect, setIsCorrect] = useState(false)
   const fileInputRef = useRef(null)
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option)
-    setShowConfetti(true)
+    setIsCorrect(true)
+  }
+
+  const handleArrived = () => {
     setShowPhotoOption(true)
   }
 
@@ -39,6 +43,81 @@ const Act3 = () => {
 
   const handleBack = () => {
     setCurrentAct(2)
+  }
+
+  if (isCorrect) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="min-h-screen flex items-center justify-center p-4 sm:p-6"
+      >
+        <div className="cozy-card max-w-md w-full text-center">
+          {/* Back Button */}
+          <button
+            onClick={() => setIsCorrect(false)}
+            className="absolute top-4 left-4 text-2xl hover:scale-110 transition-transform"
+          >
+            ←
+          </button>
+          
+          <motion.div
+            animate={{ rotate: [0, 10, -10, 0] }}
+            transition={{ duration: 0.5, repeat: 3 }}
+            className="text-6xl mb-4"
+          >
+            {selectedOption === 'game' ? '🎮' : '🎬'}
+          </motion.div>
+          
+          <h2 className="text-3xl font-bold text-cozy-purple mb-4">
+            Perfect! {selectedOption === 'game' ? 'Game Night' : 'Movie Mode'} Selected! 
+          </h2>
+          
+          <div className="space-y-4 mb-6">
+            <div className="bg-cozy-cream/50 rounded-lg p-4">
+              <p className="text-gray-700">
+                {selectedOption === 'game' 
+                  ? '🎮 Time for some fun games together! Perfect for laughs and friendly competition 💕'
+                  : '🎬 Perfect for snuggles and cozy vibes! Time to cuddle up and watch something together 🍿'
+                }
+              </p>
+            </div>
+            
+            {!showPhotoOption ? (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleArrived}
+                className="cozy-button w-full text-xl py-4"
+              >
+                Upload Photo 📸
+              </motion.button>
+            ) : (
+              <div className="space-y-3">
+                <p className="text-center text-gray-600">Capture this cozy moment! 📸</p>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleUploadClick}
+                  className="w-full py-3 px-4 bg-cozy-pink text-white rounded-lg font-semibold hover:bg-cozy-pink/80 transition-colors"
+                >
+                  📸 Upload Photo
+                </motion.button>
+              </div>
+            )}
+          </div>
+
+          {/* Hidden file input */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileSelect}
+            className="hidden"
+          />
+        </div>
+      </motion.div>
+    )
   }
 
   const Confetti = () => {
