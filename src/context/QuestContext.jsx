@@ -66,10 +66,16 @@ export const QuestProvider = ({ children }) => {
   }, [photos])
 
   const completeAct = (actNumber) => {
+    console.log('completeAct called with:', actNumber)
+    console.log('Current completed acts:', completedActs)
+    console.log('Current act before:', currentAct)
+    
     if (!completedActs.includes(actNumber)) {
       setCompletedActs(prev => [...prev, actNumber])
     }
     setCurrentAct(actNumber + 1)
+    
+    console.log('Setting current act to:', actNumber + 1)
   }
 
   const resetQuest = () => {

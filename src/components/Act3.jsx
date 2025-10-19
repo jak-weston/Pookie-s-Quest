@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useQuest } from '../context/QuestContext'
 
 const Act3 = () => {
-  const { completeAct, setCurrentAct, addPhoto } = useQuest()
+  const { completeAct, setCurrentAct, addPhoto, currentAct } = useQuest()
   const [selectedOption, setSelectedOption] = useState('')
   const [showConfetti, setShowConfetti] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
@@ -38,9 +38,10 @@ const Act3 = () => {
         
         // Add a small delay to ensure photo is saved
         setTimeout(() => {
-          console.log('Completing act 3')
+          console.log('About to complete Act 3, current act:', currentAct)
           completeAct(3)
-        }, 100)
+          console.log('Act 3 completion called')
+        }, 200)
       }
       reader.readAsDataURL(file)
     } else {

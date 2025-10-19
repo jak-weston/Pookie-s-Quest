@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useQuest } from '../context/QuestContext'
 
 const Act2 = () => {
-  const { completeAct, wordleAttempts, setWordleAttempts, setCurrentAct, addPhoto } = useQuest()
+  const { completeAct, wordleAttempts, setWordleAttempts, setCurrentAct, addPhoto, currentAct } = useQuest()
   const [currentGuess, setCurrentGuess] = useState('')
   const [guesses, setGuesses] = useState([])
   const [isSolved, setIsSolved] = useState(false)
@@ -91,9 +91,10 @@ const Act2 = () => {
         
         // Add small delay to ensure photo is saved
         setTimeout(() => {
-          console.log('Completing Act 2')
+          console.log('About to complete Act 2, current act:', currentAct)
           completeAct(2)
-        }, 100)
+          console.log('Act 2 completion called')
+        }, 200)
       }
       reader.readAsDataURL(file)
     } else {
