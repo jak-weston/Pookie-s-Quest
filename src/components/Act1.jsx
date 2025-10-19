@@ -8,8 +8,7 @@ const Act1 = () => {
   const [showHint, setShowHint] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
   const [showPhotoOption, setShowPhotoOption] = useState(false)
-  const videoRef = useRef(null)
-  const canvasRef = useRef(null)
+  const fileInputRef = useRef(null)
 
   const dinnerOptions = [
     {
@@ -45,54 +44,26 @@ const Act1 = () => {
     setShowPhotoOption(true)
   }
 
-  const handleTakePhoto = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true })
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const photoData = {
+          act: 'dinner',
+          timestamp: new Date().toISOString(),
+          dataUrl: e.target.result
+        }
+        
+        addPhoto(photoData)
+        completeAct(1)
       }
-    } catch (err) {
-      console.error('Error accessing camera:', err)
-      alert('Camera access required to continue! Please allow camera access and try again. 💕')
+      reader.readAsDataURL(file)
     }
   }
 
-  const capturePhoto = () => {
-    if (videoRef.current && canvasRef.current) {
-      const canvas = canvasRef.current
-      const video = videoRef.current
-      const ctx = canvas.getContext('2d')
-      
-      canvas.width = video.videoWidth
-      canvas.height = video.videoHeight
-      
-      ctx.drawImage(video, 0, 0)
-      
-      // Add frame overlay
-      ctx.fillStyle = 'rgba(255, 182, 193, 0.2)'
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
-      
-      // Add text overlay
-      ctx.fillStyle = '#8B4A8B'
-      ctx.font = 'bold 32px Poppins'
-      ctx.textAlign = 'center'
-      ctx.fillText('Dinner Discovery 📸', canvas.width / 2, canvas.height - 50)
-      
-      const photoData = {
-        act: 'dinner',
-        timestamp: new Date().toISOString(),
-        dataUrl: canvas.toDataURL()
-      }
-      
-      addPhoto(photoData)
-      
-      // Stop camera
-      if (video.srcObject) {
-        video.srcObject.getTracks().forEach(track => track.stop())
-      }
-      
-      completeAct(1)
-    }
+  const handleUploadClick = () => {
+    fileInputRef.current?.click()
   }
 
 
@@ -153,41 +124,23 @@ const Act1 = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={handleTakePhoto}
+                onClick={handleUploadClick}
                 className="w-full py-3 px-4 bg-cozy-pink text-white rounded-lg font-semibold hover:bg-cozy-pink/80 transition-colors"
               >
-                📸 Take Photo
+                📸 Upload Photo
               </motion.button>
             </div>
           )}
           </div>
 
-          {/* Camera Interface */}
-          {videoRef.current && videoRef.current.srcObject && (
-            <div className="mt-6 space-y-4">
-              <div className="bg-white rounded-lg p-4">
-                <video
-                  ref={videoRef}
-                  autoPlay
-                  playsInline
-                  className="w-full rounded-lg"
-                />
-                <canvas
-                  ref={canvasRef}
-                  className="hidden"
-                />
-              </div>
-              
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={capturePhoto}
-                className="w-full py-3 px-4 bg-cozy-purple text-white rounded-lg font-semibold hover:bg-cozy-purple/80 transition-colors"
-              >
-                📸 Capture Photo!
-              </motion.button>
-            </div>
-          )}
+          {/* Hidden file input */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileSelect}
+            className="hidden"
+          />
         </div>
       </motion.div>
     )
