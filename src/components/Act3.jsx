@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useQuest } from '../context/QuestContext'
 
 const Act3 = () => {
-  const { completeAct } = useQuest()
+  const { completeAct, setCurrentAct } = useQuest()
   const [selectedOption, setSelectedOption] = useState('')
   const [showConfetti, setShowConfetti] = useState(false)
 
@@ -14,6 +14,10 @@ const Act3 = () => {
     setTimeout(() => {
       completeAct(3)
     }, 2000)
+  }
+
+  const handleBack = () => {
+    setCurrentAct(2)
   }
 
   const Confetti = () => {
@@ -56,6 +60,14 @@ const Act3 = () => {
       <Confetti />
       
       <div className="cozy-card max-w-lg w-full text-center">
+        {/* Back Button */}
+        <button
+          onClick={handleBack}
+          className="absolute top-4 left-4 text-2xl hover:scale-110 transition-transform"
+        >
+          ←
+        </button>
+        
         <motion.h2
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
@@ -72,14 +84,8 @@ const Act3 = () => {
           className="mb-8"
         >
           <p className="text-lg text-gray-700 mb-6">
-            You've solved all the clues, Pookie! Time to unwind and choose your perfect cozy ending 💕
+            You've solved all the clues, Pookie! Time to unwind 💕
           </p>
-          
-          <div className="bg-cozy-cream/50 rounded-lg p-4 mb-6">
-            <p className="text-gray-600">
-              What sounds more appealing for our cozy night? ✨
-            </p>
-          </div>
         </motion.div>
 
         <div className="space-y-4">
@@ -99,10 +105,7 @@ const Act3 = () => {
             <div className="text-4xl mb-3">🎮</div>
             <div className="font-bold text-xl text-gray-800 mb-2">Game Night</div>
             <div className="text-gray-600">
-              Let's play some fun online games together! Perfect for laughs and friendly competition 💕
-            </div>
-            <div className="text-sm text-gray-500 mt-2">
-              (Gartic Phone, GeoGuessr, or Jackbox)
+              Let's play some fun online games together! 💕
             </div>
           </motion.button>
 
@@ -122,10 +125,7 @@ const Act3 = () => {
             <div className="text-4xl mb-3">🎬</div>
             <div className="font-bold text-xl text-gray-800 mb-2">Movie Mode</div>
             <div className="text-gray-600">
-              Time to cuddle up and watch something cozy together 🍿 Perfect for snuggles!
-            </div>
-            <div className="text-sm text-gray-500 mt-2">
-              (Netflix, Hulu, or your favorite streaming service)
+              Time to cuddle up and watch something cozy together 🍿
             </div>
           </motion.button>
         </div>

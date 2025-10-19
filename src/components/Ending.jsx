@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useQuest } from '../context/QuestContext'
 
 const Ending = () => {
-  const { resetQuest, photos } = useQuest()
+  const { resetQuest, photos, setCurrentAct } = useQuest()
   const [showPhotoBooth, setShowPhotoBooth] = useState(false)
   const [photoTaken, setPhotoTaken] = useState(false)
   const videoRef = useRef(null)
@@ -57,6 +57,10 @@ const Ending = () => {
     }
   }
 
+  const handleBack = () => {
+    setCurrentAct(3)
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -65,6 +69,14 @@ const Ending = () => {
       className="min-h-screen flex items-center justify-center p-4"
     >
       <div className="cozy-card max-w-md w-full text-center">
+        {/* Back Button */}
+        <button
+          onClick={handleBack}
+          className="absolute top-4 left-4 text-2xl hover:scale-110 transition-transform"
+        >
+          ←
+        </button>
+        
         {/* Floating Hearts Animation */}
         <div className="absolute inset-0 pointer-events-none">
           {[...Array(8)].map((_, i) => (

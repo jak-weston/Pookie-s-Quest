@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useQuest } from '../context/QuestContext'
 
 const Act2 = () => {
-  const { completeAct, wordleAttempts, setWordleAttempts } = useQuest()
+  const { completeAct, wordleAttempts, setWordleAttempts, setCurrentAct, addPhoto } = useQuest()
   const [currentGuess, setCurrentGuess] = useState('')
   const [guesses, setGuesses] = useState([])
   const [isSolved, setIsSolved] = useState(false)
   const [showResult, setShowResult] = useState(false)
+  const [showPhotoOption, setShowPhotoOption] = useState(false)
+  const videoRef = useRef(null)
+  const canvasRef = useRef(null)
 
   const targetWord = 'BAY'
   const maxAttempts = 5
@@ -56,7 +59,66 @@ const Act2 = () => {
   }
 
   const handleArrived = () => {
+    setShowPhotoOption(true)
+  }
+
+  const handleTakePhoto = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream
+      }
+    } catch (err) {
+      console.error('Error accessing camera:', err)
+      alert('Camera access denied. Continuing without photo! 💕')
+      completeAct(2)
+    }
+  }
+
+  const capturePhoto = () => {
+    if (videoRef.current && canvasRef.current) {
+      const canvas = canvasRef.current
+      const video = videoRef.current
+      const ctx = canvas.getContext('2d')
+      
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
+      
+      ctx.drawImage(video, 0, 0)
+      
+      // Add frame overlay
+      ctx.fillStyle = 'rgba(135, 206, 235, 0.2)'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      
+      // Add text overlay
+      ctx.fillStyle = '#8B4A8B'
+      ctx.font = 'bold 32px Poppins'
+      ctx.textAlign = 'center'
+      ctx.fillText('Bay Discovery 📸', canvas.width / 2, canvas.height - 50)
+      
+      const photoData = {
+        act: 'bay',
+        timestamp: new Date().toISOString(),
+        dataUrl: canvas.toDataURL()
+      }
+      
+      addPhoto(photoData)
+      
+      // Stop camera
+      if (video.srcObject) {
+        video.srcObject.getTracks().forEach(track => track.stop())
+      }
+      
+      completeAct(2)
+    }
+  }
+
+  const skipPhoto = () => {
     completeAct(2)
+  }
+
+  const handleBack = () => {
+    setCurrentAct(1)
   }
 
   if (showResult) {
@@ -67,6 +129,14 @@ const Act2 = () => {
       className="min-h-screen flex items-center justify-center p-4 sm:p-6"
       >
         <div className="cozy-card max-w-md w-full text-center">
+          {/* Back Button */}
+          <button
+            onClick={handleBack}
+            className="absolute top-4 left-4 text-2xl hover:scale-110 transition-transform"
+          >
+            ←
+          </button>
+          
           <motion.div
             animate={{ rotate: [0, 10, -10, 0] }}
             transition={{ duration: 0.5, repeat: 3 }}
@@ -83,14 +153,65 @@ const Act2 = () => {
             Where the city lights reflect like stars on water ✨
           </p>
           
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleArrived}
-            className="cozy-button w-full text-xl py-4"
-          >
-            We've arrived! 🌟
-          </motion.button>
+          {!showPhotoOption ? (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleArrived}
+              className="cozy-button w-full text-xl py-4"
+            >
+              We've arrived! 🌟
+            </motion.button>
+          ) : (
+            <div className="space-y-3">
+              <p className="text-center text-gray-600">Want to capture this moment? 📸</p>
+              <div className="flex gap-3">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleTakePhoto}
+                  className="flex-1 py-3 px-4 bg-cozy-blue text-white rounded-lg font-semibold hover:bg-cozy-blue/80 transition-colors"
+                >
+                  📸 Take Photo
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={skipPhoto}
+                  className="flex-1 py-3 px-4 bg-gray-500 text-white rounded-lg font-semibold hover:bg-gray-600 transition-colors"
+                >
+                  Skip
+                </motion.button>
+              </div>
+            </div>
+          )}
+
+          {/* Camera Interface */}
+          {videoRef.current && videoRef.current.srcObject && (
+            <div className="mt-6 space-y-4">
+              <div className="bg-white rounded-lg p-4">
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  playsInline
+                  className="w-full rounded-lg"
+                />
+                <canvas
+                  ref={canvasRef}
+                  className="hidden"
+                />
+              </div>
+              
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={capturePhoto}
+                className="w-full py-3 px-4 bg-cozy-blue text-white rounded-lg font-semibold hover:bg-cozy-blue/80 transition-colors"
+              >
+                📸 Capture Photo!
+              </motion.button>
+            </div>
+          )}
         </div>
       </motion.div>
     )
@@ -104,6 +225,14 @@ const Act2 = () => {
       className="min-h-screen flex items-center justify-center p-4 sm:p-6"
     >
       <div className="cozy-card max-w-lg w-full">
+        {/* Back Button */}
+        <button
+          onClick={handleBack}
+          className="absolute top-4 left-4 text-2xl hover:scale-110 transition-transform"
+        >
+          ←
+        </button>
+        
         <motion.h2
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
@@ -122,12 +251,6 @@ const Act2 = () => {
           <p className="text-lg text-gray-700 mb-4">
             That was delicious! Now it's time to test your wit. Solve the puzzle below to find our next stop...
           </p>
-          
-          <div className="bg-cozy-cream/50 rounded-lg p-4 mb-6">
-            <p className="text-gray-600">
-              <strong>Hint:</strong> Think of where water meets land in San Diego 🌊
-            </p>
-          </div>
         </motion.div>
 
         {/* Wordle Grid */}
@@ -179,8 +302,35 @@ const Act2 = () => {
         {/* Keyboard */}
         {!isSolved && guesses.length < maxAttempts && (
           <div className="space-y-3">
+            {/* QWERTY Layout */}
             <div className="flex gap-1 justify-center flex-wrap">
-              {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'].map(letter => (
+              {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map(letter => (
+                <motion.button
+                  key={letter}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleKeyPress(letter)}
+                  className="w-8 h-8 sm:w-10 sm:h-10 bg-cozy-purple text-white rounded-lg font-bold hover:bg-cozy-purple/80 transition-colors text-sm sm:text-base"
+                >
+                  {letter}
+                </motion.button>
+              ))}
+            </div>
+            <div className="flex gap-1 justify-center flex-wrap">
+              {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'].map(letter => (
+                <motion.button
+                  key={letter}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleKeyPress(letter)}
+                  className="w-8 h-8 sm:w-10 sm:h-10 bg-cozy-purple text-white rounded-lg font-bold hover:bg-cozy-purple/80 transition-colors text-sm sm:text-base"
+                >
+                  {letter}
+                </motion.button>
+              ))}
+            </div>
+            <div className="flex gap-1 justify-center flex-wrap">
+              {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map(letter => (
                 <motion.button
                   key={letter}
                   whileHover={{ scale: 1.05 }}

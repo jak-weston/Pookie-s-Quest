@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useQuest } from '../context/QuestContext'
 
 const Act1 = () => {
-  const { completeAct, dinnerAnswer, setDinnerAnswer, addPhoto } = useQuest()
+  const { completeAct, dinnerAnswer, setDinnerAnswer, addPhoto, setCurrentAct } = useQuest()
   const [selectedAnswer, setSelectedAnswer] = useState('')
   const [showHint, setShowHint] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
@@ -13,40 +13,32 @@ const Act1 = () => {
 
   const dinnerOptions = [
     {
-      id: 'red-oolong',
-      name: 'Red Oolong Noodle Bar',
-      clues: ['Handmade noodles 🍜', 'Hidden gem downtown 👀'],
+      id: 'choice1',
+      name: 'Your Choice',
+      clues: ['Pick your favorite! 🍜'],
       correct: true,
-      mapLink: 'https://maps.google.com/?q=Red+Oolong+Noodle+Bar+San+Diego'
+      mapLink: 'https://maps.google.com/?q=Asian+Restaurants+San+Diego'
     },
     {
-      id: 'sushi',
-      name: 'Sushi Ota',
-      clues: ['Fresh fish 🍣', 'Mission Hills 🏔️'],
-      correct: false,
-      mapLink: 'https://maps.google.com/?q=Sushi+Ota+San+Diego'
+      id: 'choice2',
+      name: 'Your Choice',
+      clues: ['Pick your favorite! 🍣'],
+      correct: true,
+      mapLink: 'https://maps.google.com/?q=Asian+Restaurants+San+Diego'
     },
     {
-      id: 'ramen',
-      name: 'Menya Ultra',
-      clues: ['Rich ramen 🍲', 'Convoy District 🏙️'],
-      correct: false,
-      mapLink: 'https://maps.google.com/?q=Menya+Ultra+San+Diego'
+      id: 'choice3',
+      name: 'Your Choice',
+      clues: ['Pick your favorite! 🍲'],
+      correct: true,
+      mapLink: 'https://maps.google.com/?q=Asian+Restaurants+San+Diego'
     }
   ]
 
   const handleAnswerSelect = (option) => {
     setSelectedAnswer(option.id)
     setDinnerAnswer(option.name)
-    
-    if (option.correct) {
-      setIsCorrect(true)
-      setTimeout(() => {
-        completeAct(1)
-      }, 2000)
-    } else {
-      setShowHint(true)
-    }
+    setIsCorrect(true)
   }
 
   const handleArrived = () => {
@@ -108,6 +100,10 @@ const Act1 = () => {
     completeAct(1)
   }
 
+  const handleBack = () => {
+    setCurrentAct(0)
+  }
+
   if (isCorrect) {
     return (
     <motion.div
@@ -116,6 +112,14 @@ const Act1 = () => {
       className="min-h-screen flex items-center justify-center p-4 sm:p-6"
       >
         <div className="cozy-card max-w-md w-full text-center">
+          {/* Back Button */}
+          <button
+            onClick={handleBack}
+            className="absolute top-4 left-4 text-2xl hover:scale-110 transition-transform"
+          >
+            ←
+          </button>
+          
           <motion.div
             animate={{ rotate: [0, 10, -10, 0] }}
             transition={{ duration: 0.5, repeat: 3 }}
@@ -125,17 +129,17 @@ const Act1 = () => {
           </motion.div>
           
           <h2 className="text-3xl font-bold text-cozy-purple mb-4">
-            Perfect! Red Oolong Noodle Bar 🍜
+            Perfect! Your Choice 🍜
           </h2>
           
           <div className="space-y-4 mb-6">
             <a 
-              href="https://maps.google.com/?q=Red+Oolong+Noodle+Bar+San+Diego"
+              href="https://maps.google.com/?q=Asian+Restaurants+San+Diego"
               target="_blank"
               rel="noopener noreferrer"
               className="block w-full py-3 px-4 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors"
             >
-              📍 Get Directions
+              📍 Find Asian Restaurants
             </a>
             
             {!showPhotoOption ? (
@@ -211,6 +215,14 @@ const Act1 = () => {
       className="min-h-screen flex items-center justify-center p-4 sm:p-6"
     >
       <div className="cozy-card max-w-lg w-full">
+        {/* Back Button */}
+        <button
+          onClick={handleBack}
+          className="absolute top-4 left-4 text-2xl hover:scale-110 transition-transform"
+        >
+          ←
+        </button>
+        
         <motion.h2
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
@@ -227,14 +239,8 @@ const Act1 = () => {
           className="text-center mb-6"
         >
           <p className="text-lg text-gray-700 mb-4">
-            Guess where we're eating! 🍜
+            Choose where we're eating! 🍜
           </p>
-          
-          <div className="bg-cozy-cream/50 rounded-lg p-3 mb-4">
-            <p className="text-gray-600">
-              <strong>Clue:</strong> Handmade noodles 🍜
-            </p>
-          </div>
         </motion.div>
 
         <div className="space-y-3">
@@ -272,17 +278,6 @@ const Act1 = () => {
           ))}
         </div>
 
-        {showHint && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-4 p-3 bg-yellow-100 rounded-lg border border-yellow-300"
-          >
-            <p className="text-yellow-800 text-center text-sm">
-              Not quite! Hidden gem downtown 👀 Try again! 💕
-            </p>
-          </motion.div>
-        )}
       </div>
     </motion.div>
   )

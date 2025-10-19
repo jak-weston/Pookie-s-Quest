@@ -9,6 +9,10 @@ const Intro = () => {
     completeAct(0)
   }
 
+  const handleBack = () => {
+    // No back button needed for intro
+  }
+
   const toggleMusic = () => {
     setMusicEnabled(!musicEnabled)
   }
