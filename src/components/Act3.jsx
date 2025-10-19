@@ -25,8 +25,14 @@ const Act3 = () => {
           dataUrl: e.target.result
         }
         
+        console.log('Adding photo data:', photoData)
         addPhoto(photoData)
-        completeAct(3)
+        
+        // Add a small delay to ensure photo is saved
+        setTimeout(() => {
+          console.log('Completing act 3')
+          completeAct(3)
+        }, 100)
       }
       reader.readAsDataURL(file)
     }
@@ -228,20 +234,6 @@ const Act3 = () => {
             </p>
           </motion.div>
         )}
-
-        {/* Heart meter */}
-        <div className="mt-8">
-          <div className="text-sm text-gray-600 mb-2">Cozy Quest Progress</div>
-          <div className="w-full bg-gray-200 rounded-full h-3">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: '100%' }}
-              transition={{ duration: 1, delay: 0.5 }}
-              className="bg-gradient-to-r from-cozy-pink to-cozy-purple h-3 rounded-full"
-            />
-          </div>
-          <div className="text-xs text-gray-500 mt-1">💕 Quest Complete! 💕</div>
-        </div>
       </div>
     </motion.div>
   )

@@ -82,7 +82,12 @@ export const QuestProvider = ({ children }) => {
   }
 
   const addPhoto = (photoData) => {
-    setPhotos(prev => [...prev, photoData])
+    console.log('Adding photo to context:', photoData)
+    setPhotos(prev => {
+      const newPhotos = [...prev, photoData]
+      console.log('Updated photos array:', newPhotos)
+      return newPhotos
+    })
   }
 
   const value = {
