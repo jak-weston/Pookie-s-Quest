@@ -68,24 +68,39 @@ const Act2 = () => {
   }
 
   const handleFileSelect = (event) => {
+    console.log('File select triggered in Act2')
     const file = event.target.files[0]
+    console.log('Selected file:', file)
+    
     if (file) {
+      console.log('File selected, reading...')
       const reader = new FileReader()
       reader.onload = (e) => {
+        console.log('File read successfully')
         const photoData = {
           act: 'bay',
           timestamp: new Date().toISOString(),
           dataUrl: e.target.result
         }
         
+        console.log('Adding photo data:', photoData)
         addPhoto(photoData)
-        completeAct(2)
+        
+        // Add small delay to ensure photo is saved
+        setTimeout(() => {
+          console.log('Completing Act 2')
+          completeAct(2)
+        }, 100)
       }
       reader.readAsDataURL(file)
+    } else {
+      console.log('No file selected')
     }
   }
 
   const handleUploadClick = () => {
+    console.log('Upload click triggered in Act2')
+    console.log('File input ref:', fileInputRef.current)
     fileInputRef.current?.click()
   }
 

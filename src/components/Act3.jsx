@@ -15,10 +15,15 @@ const Act3 = () => {
   }
 
   const handleFileSelect = (event) => {
+    console.log('File select triggered in Act3')
     const file = event.target.files[0]
+    console.log('Selected file:', file)
+    
     if (file) {
+      console.log('File selected, reading...')
       const reader = new FileReader()
       reader.onload = (e) => {
+        console.log('File read successfully')
         const photoData = {
           act: 'finale',
           timestamp: new Date().toISOString(),
@@ -35,10 +40,14 @@ const Act3 = () => {
         }, 100)
       }
       reader.readAsDataURL(file)
+    } else {
+      console.log('No file selected')
     }
   }
 
   const handleUploadClick = () => {
+    console.log('Upload click triggered in Act3')
+    console.log('File input ref:', fileInputRef.current)
     fileInputRef.current?.click()
   }
 
