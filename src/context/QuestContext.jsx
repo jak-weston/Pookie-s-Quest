@@ -35,6 +35,11 @@ export const QuestProvider = ({ children }) => {
     const saved = localStorage.getItem('pookie-quest-dinner')
     return saved || ''
   })
+  
+  const [photos, setPhotos] = useState(() => {
+    const saved = localStorage.getItem('pookie-quest-photos')
+    return saved ? JSON.parse(saved) : []
+  })
 
   useEffect(() => {
     localStorage.setItem('pookie-quest-act', currentAct.toString())
@@ -56,6 +61,10 @@ export const QuestProvider = ({ children }) => {
     localStorage.setItem('pookie-quest-dinner', dinnerAnswer)
   }, [dinnerAnswer])
 
+  useEffect(() => {
+    localStorage.setItem('pookie-quest-photos', JSON.stringify(photos))
+  }, [photos])
+
   const completeAct = (actNumber) => {
     if (!completedActs.includes(actNumber)) {
       setCompletedActs(prev => [...prev, actNumber])
@@ -68,7 +77,12 @@ export const QuestProvider = ({ children }) => {
     setCompletedActs([])
     setWordleAttempts([])
     setDinnerAnswer('')
+    setPhotos([])
     localStorage.clear()
+  }
+
+  const addPhoto = (photoData) => {
+    setPhotos(prev => [...prev, photoData])
   }
 
   const value = {
@@ -82,6 +96,8 @@ export const QuestProvider = ({ children }) => {
     setWordleAttempts,
     dinnerAnswer,
     setDinnerAnswer,
+    photos,
+    addPhoto,
     resetQuest
   }
 

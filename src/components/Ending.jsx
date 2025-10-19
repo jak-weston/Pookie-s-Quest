@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useQuest } from '../context/QuestContext'
 
 const Ending = () => {
-  const { resetQuest } = useQuest()
+  const { resetQuest, photos } = useQuest()
   const [showPhotoBooth, setShowPhotoBooth] = useState(false)
   const [photoTaken, setPhotoTaken] = useState(false)
   const videoRef = useRef(null)
@@ -133,6 +133,33 @@ const Ending = () => {
                 <p>🎮 Act 3: Cozy Finale - Chosen!</p>
               </div>
             </div>
+
+            {/* Photo Gallery */}
+            {photos.length > 0 && (
+              <div className="bg-white/80 rounded-lg p-4 mb-6">
+                <h3 className="font-semibold text-gray-800 mb-3 text-center">📸 Quest Memories</h3>
+                <div className="grid grid-cols-1 gap-3">
+                  {photos.map((photo, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="relative"
+                    >
+                      <img
+                        src={photo.dataUrl}
+                        alt={`Quest memory ${index + 1}`}
+                        className="w-full rounded-lg shadow-md"
+                      />
+                      <div className="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                        {photo.act === 'dinner' ? '🍜 Dinner' : '📸 Memory'}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {!showPhotoBooth ? (
               <motion.button
