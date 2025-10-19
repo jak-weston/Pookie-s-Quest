@@ -48,26 +48,6 @@ const Ending = () => {
     }
   }
 
-  const downloadAllPhotos = () => {
-    if (photos.length === 0) return
-    
-    photos.forEach((photo, index) => {
-      const link = document.createElement('a')
-      link.download = `pookie-quest-photo-${index + 1}.png`
-      link.href = photo.dataUrl
-      link.click()
-    })
-  }
-
-  const downloadPhoto = () => {
-    if (canvasRef.current) {
-      const link = document.createElement('a')
-      link.download = 'pookie-cozy-quest-photobooth.png'
-      link.href = canvasRef.current.toDataURL()
-      link.click()
-    }
-  }
-
   const handleBack = () => {
     setCurrentAct(3)
   }
@@ -155,39 +135,29 @@ const Ending = () => {
                   {/* Photo Gallery */}
                   {photos.length > 0 && (
                     <div className="bg-white/80 rounded-lg p-4 mb-6">
-                      <div className="flex justify-between items-center mb-3">
-                        <h3 className="font-semibold text-gray-800 text-center flex-1">📸 Quest Memories</h3>
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={downloadAllPhotos}
-                          className="ml-3 px-3 py-1 bg-cozy-purple text-white rounded-lg text-sm font-semibold hover:bg-cozy-purple/80 transition-colors"
-                        >
-                          📥 Download All
-                        </motion.button>
+                      <h3 className="font-semibold text-gray-800 text-center mb-3">📸 Quest Memories</h3>
+                      <div className="grid grid-cols-1 gap-3">
+                        {photos.map((photo, index) => (
+                          <motion.div
+                            key={index}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="relative"
+                          >
+                            <img
+                              src={photo.dataUrl}
+                              alt={`Quest memory ${index + 1}`}
+                              className="w-full rounded-lg shadow-md"
+                            />
+                            <div className="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                              {photo.act === 'outfit' ? '👗 Outfit' : photo.act === 'dinner' ? '🍜 Dinner' : photo.act === 'bay' ? '🌊 Bay' : photo.act === 'finale' ? '🎮 Finale' : '📸 Memory'}
+                            </div>
+                          </motion.div>
+                        ))}
                       </div>
-                <div className="grid grid-cols-1 gap-3">
-                  {photos.map((photo, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="relative"
-                    >
-                      <img
-                        src={photo.dataUrl}
-                        alt={`Quest memory ${index + 1}`}
-                        className="w-full rounded-lg shadow-md"
-                      />
-                      <div className="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                        {photo.act === 'outfit' ? '👗 Outfit' : photo.act === 'dinner' ? '🍜 Dinner' : photo.act === 'bay' ? '🌊 Bay' : photo.act === 'finale' ? '🎮 Finale' : '📸 Memory'}
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            )}
+                    </div>
+                  )}
 
             {!showPhotoBooth ? (
               <motion.button
@@ -227,14 +197,7 @@ const Ending = () => {
                     <div className="bg-green-100 text-green-800 p-3 rounded-lg">
                       <p className="font-semibold">Perfect shot! 💕</p>
                     </div>
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={downloadPhoto}
-                      className="cozy-button w-full text-lg py-3"
-                    >
-                      💾 Download Photo
-                    </motion.button>
+                    <img src={canvasRef.current?.toDataURL()} alt="Captured" className="w-full rounded-lg shadow-md" />
                   </div>
                 )}
               </div>
