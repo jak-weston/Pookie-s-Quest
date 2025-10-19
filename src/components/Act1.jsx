@@ -13,25 +13,25 @@ const Act1 = () => {
 
   const dinnerOptions = [
     {
-      id: 'choice1',
-      name: 'Your Choice',
-      clues: ['Pick your favorite! 🍜'],
+      id: 'noodles',
+      name: 'Ramen Nagi',
+      clues: ['Handmade noodles 🍜', 'Little Italy 🍝'],
       correct: true,
-      mapLink: 'https://maps.google.com/?q=Asian+Restaurants+San+Diego'
+      mapLink: 'https://maps.google.com/?q=Ramen+Nagi+San+Diego'
     },
     {
-      id: 'choice2',
-      name: 'Your Choice',
-      clues: ['Pick your favorite! 🍣'],
+      id: 'sushi',
+      name: 'Sushi Ota',
+      clues: ['Fresh fish 🍣', 'Mission Hills 🏔️'],
       correct: true,
-      mapLink: 'https://maps.google.com/?q=Asian+Restaurants+San+Diego'
+      mapLink: 'https://maps.google.com/?q=Sushi+Ota+San+Diego'
     },
     {
-      id: 'choice3',
-      name: 'Your Choice',
-      clues: ['Pick your favorite! 🍲'],
+      id: 'burgers',
+      name: 'The Balboa Bar & Grill',
+      clues: ['Juicy burgers 🍔', 'Balboa Park 🏛️'],
       correct: true,
-      mapLink: 'https://maps.google.com/?q=Asian+Restaurants+San+Diego'
+      mapLink: 'https://maps.google.com/?q=Balboa+Bar+Grill+San+Diego'
     }
   ]
 
@@ -129,17 +129,17 @@ const Act1 = () => {
           </motion.div>
           
           <h2 className="text-3xl font-bold text-cozy-purple mb-4">
-            Perfect! Your Choice 🍜
+            Perfect! {dinnerAnswer} 🍜
           </h2>
           
           <div className="space-y-4 mb-6">
             <a 
-              href="https://maps.google.com/?q=Asian+Restaurants+San+Diego"
+              href={dinnerOptions.find(opt => opt.name === dinnerAnswer)?.mapLink || 'https://maps.google.com/?q=San+Diego+Restaurants'}
               target="_blank"
               rel="noopener noreferrer"
               className="block w-full py-3 px-4 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors"
             >
-              📍 Find Asian Restaurants
+              📍 Get Directions
             </a>
             
             {!showPhotoOption ? (

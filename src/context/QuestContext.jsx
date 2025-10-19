@@ -13,7 +13,7 @@ export const useQuest = () => {
 export const QuestProvider = ({ children }) => {
   const [currentAct, setCurrentAct] = useState(() => {
     const saved = localStorage.getItem('pookie-quest-act')
-    return saved ? parseInt(saved) : 0
+    return saved ? parseInt(saved) : -1
   })
   
   const [completedActs, setCompletedActs] = useState(() => {
@@ -73,7 +73,7 @@ export const QuestProvider = ({ children }) => {
   }
 
   const resetQuest = () => {
-    setCurrentAct(0)
+    setCurrentAct(-1)
     setCompletedActs([])
     setWordleAttempts([])
     setDinnerAnswer('')

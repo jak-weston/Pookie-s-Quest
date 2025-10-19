@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { QuestProvider, useQuest } from './context/QuestContext'
+import HomeScreen from './components/HomeScreen'
 import Intro from './components/Intro'
 import Act1 from './components/Act1'
 import Act2 from './components/Act2'
@@ -38,6 +39,8 @@ const AppContent = () => {
 
   const renderCurrentAct = () => {
     switch (currentAct) {
+      case -1:
+        return <HomeScreen />
       case 0:
         return <Intro />
       case 1:
@@ -49,7 +52,7 @@ const AppContent = () => {
       case 4:
         return <Ending />
       default:
-        return <Intro />
+        return <HomeScreen />
     }
   }
 
@@ -75,7 +78,7 @@ const AppContent = () => {
       <div className="fixed top-4 left-4 right-4 z-20">
         <div className="bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg">
           <div className="flex justify-center space-x-2">
-            {[0, 1, 2, 3, 4].map((act) => (
+            {[-1, 0, 1, 2, 3, 4].map((act) => (
               <div
                 key={act}
                 className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${
