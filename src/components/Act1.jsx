@@ -5,9 +5,7 @@ import { useQuest } from '../context/QuestContext'
 const Act1 = () => {
   const { completeAct, dinnerAnswer, setDinnerAnswer, addPhoto, setCurrentAct } = useQuest()
   const [selectedAnswer, setSelectedAnswer] = useState('')
-  const [showHint, setShowHint] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
-  const [showPhotoOption, setShowPhotoOption] = useState(false)
   const fileInputRef = useRef(null)
 
   const dinnerOptions = [
@@ -38,10 +36,6 @@ const Act1 = () => {
     setSelectedAnswer(option.id)
     setDinnerAnswer(option.name)
     setIsCorrect(true)
-  }
-
-  const handleArrived = () => {
-    setShowPhotoOption(true)
   }
 
   const handleFileSelect = (event) => {
@@ -109,28 +103,14 @@ const Act1 = () => {
               📍 Get Directions
             </a>
             
-            {!showPhotoOption ? (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleArrived}
-                className="cozy-button w-full text-xl py-4"
-              >
-                Upload Photo 📸
-              </motion.button>
-            ) : (
-            <div className="space-y-3">
-              <p className="text-center text-gray-600">Want to capture this moment? 📸</p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleUploadClick}
-                className="w-full py-3 px-4 bg-cozy-pink text-white rounded-lg font-semibold hover:bg-cozy-pink/80 transition-colors"
-              >
-                📸 Upload Photo
-              </motion.button>
-            </div>
-          )}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleUploadClick}
+              className="cozy-button w-full text-xl py-4"
+            >
+              Upload Photo 📸
+            </motion.button>
           </div>
 
           {/* Hidden file input */}

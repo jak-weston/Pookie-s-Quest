@@ -6,17 +6,12 @@ const Act3 = () => {
   const { completeAct, setCurrentAct, addPhoto } = useQuest()
   const [selectedOption, setSelectedOption] = useState('')
   const [showConfetti, setShowConfetti] = useState(false)
-  const [showPhotoOption, setShowPhotoOption] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
   const fileInputRef = useRef(null)
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option)
     setIsCorrect(true)
-  }
-
-  const handleArrived = () => {
-    setShowPhotoOption(true)
   }
 
   const handleFileSelect = (event) => {
@@ -83,28 +78,14 @@ const Act3 = () => {
               </p>
             </div>
             
-            {!showPhotoOption ? (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleArrived}
-                className="cozy-button w-full text-xl py-4"
-              >
-                Upload Photo 📸
-              </motion.button>
-            ) : (
-              <div className="space-y-3">
-                <p className="text-center text-gray-600">Capture this cozy moment! 📸</p>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={handleUploadClick}
-                  className="w-full py-3 px-4 bg-cozy-pink text-white rounded-lg font-semibold hover:bg-cozy-pink/80 transition-colors"
-                >
-                  📸 Upload Photo
-                </motion.button>
-              </div>
-            )}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleUploadClick}
+              className="cozy-button w-full text-xl py-4"
+            >
+              Upload Photo 📸
+            </motion.button>
           </div>
 
           {/* Hidden file input */}
@@ -239,39 +220,14 @@ const Act3 = () => {
             <p className="text-center font-semibold">
               {selectedOption === 'game' ? '🎮 Game Night Selected!' : '🎬 Movie Mode Selected!'}
             </p>
-            {!showPhotoOption ? (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setShowPhotoOption(true)}
-                className="w-full mt-3 py-2 px-4 bg-white text-cozy-purple rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-              >
-                Upload Photo 📸
-              </motion.button>
-            ) : (
-              <div className="mt-3 space-y-2">
-                <p className="text-center text-sm">Capture this cozy moment! 📸</p>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={handleUploadClick}
-                  className="w-full py-2 px-4 bg-white text-cozy-purple rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-                >
-                  📸 Upload Photo
-                </motion.button>
-              </div>
-            )}
+            <p className="text-center text-sm mt-1 opacity-90">
+              {selectedOption === 'game' 
+                ? 'Time for some fun games together! 💕' 
+                : 'Perfect for snuggles and cozy vibes! 🍿'
+              }
+            </p>
           </motion.div>
         )}
-
-        {/* Hidden file input */}
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          onChange={handleFileSelect}
-          className="hidden"
-        />
 
         {/* Heart meter */}
         <div className="mt-8">

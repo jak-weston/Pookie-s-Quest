@@ -8,7 +8,6 @@ const Act2 = () => {
   const [guesses, setGuesses] = useState([])
   const [isSolved, setIsSolved] = useState(false)
   const [showResult, setShowResult] = useState(false)
-  const [showPhotoOption, setShowPhotoOption] = useState(false)
   const [usedLetters, setUsedLetters] = useState({})
   const fileInputRef = useRef(null)
 
@@ -66,10 +65,6 @@ const Act2 = () => {
     if (letter === targetWord[position]) return 'correct'
     if (targetWord.includes(letter)) return 'present'
     return 'absent'
-  }
-
-  const handleArrived = () => {
-    setShowPhotoOption(true)
   }
 
   const handleFileSelect = (event) => {
@@ -131,28 +126,14 @@ const Act2 = () => {
             Where the city lights reflect like stars on water ✨
           </p>
           
-          {!showPhotoOption ? (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleArrived}
-              className="cozy-button w-full text-xl py-4"
-            >
-              Upload Photo 📸
-            </motion.button>
-          ) : (
-            <div className="space-y-3">
-              <p className="text-center text-gray-600">Want to capture this moment? 📸</p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleUploadClick}
-                className="w-full py-3 px-4 bg-cozy-blue text-white rounded-lg font-semibold hover:bg-cozy-blue/80 transition-colors"
-              >
-                📸 Upload Photo
-              </motion.button>
-            </div>
-          )}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleUploadClick}
+            className="cozy-button w-full text-xl py-4"
+          >
+            Upload Photo 📸
+          </motion.button>
 
           {/* Hidden file input */}
           <input
