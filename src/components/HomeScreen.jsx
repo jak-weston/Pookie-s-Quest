@@ -21,8 +21,7 @@ const HomeScreen = () => {
       }
     } catch (err) {
       console.error('Error accessing camera:', err)
-      alert('Camera access denied. Continuing without photo! 💕')
-      completeAct(0)
+      alert('Camera access required to continue! Please allow camera access and try again. 💕')
     }
   }
 
@@ -67,9 +66,6 @@ const HomeScreen = () => {
     }
   }
 
-  const skipPhoto = () => {
-    completeAct(0)
-  }
 
   if (photoTaken) {
     return (
@@ -159,10 +155,7 @@ const HomeScreen = () => {
           <div className="bg-gradient-to-r from-cozy-pink to-cozy-purple text-white p-4 rounded-lg mb-6">
             <h3 className="font-bold text-lg mb-3">📅 Date Details</h3>
             <div className="text-sm space-y-1">
-              <p>🕰️ <strong>Pickup Time:</strong> 6:30 PM</p>
-              <p>📍 <strong>Location:</strong> Your place</p>
-              <p>🌊 <strong>Destination:</strong> Harbor Bay Area</p>
-              <p>🍜 <strong>Dinner:</strong> Your choice!</p>
+              <p>🕰️ <strong>Pickup Time:</strong> 5:00 PM</p>
             </div>
           </div>
 
@@ -178,12 +171,6 @@ const HomeScreen = () => {
           transition={{ delay: 0.9 }}
           className="space-y-4"
         >
-          <div className="text-sm text-gray-600 mb-6">
-            <p>🎯 3 Acts of cozy adventure</p>
-            <p>🍜 Dinner discovery game</p>
-            <p>🧩 Wordle puzzle challenge</p>
-            <p>🎮 Choose your cozy finale</p>
-          </div>
 
           {!showPhotoOption ? (
             <motion.button
@@ -192,29 +179,19 @@ const HomeScreen = () => {
               onClick={handleStartQuest}
               className="cozy-button w-full text-xl py-4"
             >
-              Start My Quest ✨
+              Take Photo of Your Outfit 📸
             </motion.button>
           ) : (
             <div className="space-y-3">
-              <p className="text-center text-gray-600">First, let's capture your amazing outfit! 📸</p>
-              <div className="flex gap-3">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={handleTakePhoto}
-                  className="flex-1 py-3 px-4 bg-cozy-pink text-white rounded-lg font-semibold hover:bg-cozy-pink/80 transition-colors"
-                >
-                  📸 Take Photo
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={skipPhoto}
-                  className="flex-1 py-3 px-4 bg-gray-500 text-white rounded-lg font-semibold hover:bg-gray-600 transition-colors"
-                >
-                  Skip
-                </motion.button>
-              </div>
+              <p className="text-center text-gray-600">Let's capture your amazing outfit! 📸</p>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleTakePhoto}
+                className="w-full py-3 px-4 bg-cozy-pink text-white rounded-lg font-semibold hover:bg-cozy-pink/80 transition-colors"
+              >
+                📸 Take Photo
+              </motion.button>
             </div>
           )}
 

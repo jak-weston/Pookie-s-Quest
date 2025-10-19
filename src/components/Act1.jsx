@@ -53,8 +53,7 @@ const Act1 = () => {
       }
     } catch (err) {
       console.error('Error accessing camera:', err)
-      alert('Camera access denied. Continuing without photo! 💕')
-      completeAct(1)
+      alert('Camera access required to continue! Please allow camera access and try again. 💕')
     }
   }
 
@@ -96,9 +95,6 @@ const Act1 = () => {
     }
   }
 
-  const skipPhoto = () => {
-    completeAct(1)
-  }
 
   const handleBack = () => {
     setCurrentAct(0)
@@ -151,29 +147,19 @@ const Act1 = () => {
               >
                 Arrived & Ate! 🍽️
               </motion.button>
-            ) : (
-              <div className="space-y-3">
-                <p className="text-center text-gray-600">Want to capture this moment? 📸</p>
-                <div className="flex gap-3">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleTakePhoto}
-                    className="flex-1 py-3 px-4 bg-cozy-pink text-white rounded-lg font-semibold hover:bg-cozy-pink/80 transition-colors"
-                  >
-                    📸 Take Photo
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={skipPhoto}
-                    className="flex-1 py-3 px-4 bg-gray-500 text-white rounded-lg font-semibold hover:bg-gray-600 transition-colors"
-                  >
-                    Skip
-                  </motion.button>
-                </div>
-              </div>
-            )}
+          ) : (
+            <div className="space-y-3">
+              <p className="text-center text-gray-600">Want to capture this moment? 📸</p>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleTakePhoto}
+                className="w-full py-3 px-4 bg-cozy-pink text-white rounded-lg font-semibold hover:bg-cozy-pink/80 transition-colors"
+              >
+                📸 Take Photo
+              </motion.button>
+            </div>
+          )}
           </div>
 
           {/* Camera Interface */}

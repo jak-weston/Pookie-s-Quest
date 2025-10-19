@@ -70,8 +70,7 @@ const Act2 = () => {
       }
     } catch (err) {
       console.error('Error accessing camera:', err)
-      alert('Camera access denied. Continuing without photo! 💕')
-      completeAct(2)
+      alert('Camera access required to continue! Please allow camera access and try again. 💕')
     }
   }
 
@@ -113,9 +112,6 @@ const Act2 = () => {
     }
   }
 
-  const skipPhoto = () => {
-    completeAct(2)
-  }
 
   const handleBack = () => {
     setCurrentAct(1)
@@ -165,24 +161,14 @@ const Act2 = () => {
           ) : (
             <div className="space-y-3">
               <p className="text-center text-gray-600">Want to capture this moment? 📸</p>
-              <div className="flex gap-3">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={handleTakePhoto}
-                  className="flex-1 py-3 px-4 bg-cozy-blue text-white rounded-lg font-semibold hover:bg-cozy-blue/80 transition-colors"
-                >
-                  📸 Take Photo
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={skipPhoto}
-                  className="flex-1 py-3 px-4 bg-gray-500 text-white rounded-lg font-semibold hover:bg-gray-600 transition-colors"
-                >
-                  Skip
-                </motion.button>
-              </div>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleTakePhoto}
+                className="w-full py-3 px-4 bg-cozy-blue text-white rounded-lg font-semibold hover:bg-cozy-blue/80 transition-colors"
+              >
+                📸 Take Photo
+              </motion.button>
             </div>
           )}
 

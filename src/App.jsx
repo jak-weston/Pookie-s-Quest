@@ -6,6 +6,7 @@ import Act1 from './components/Act1'
 import Act2 from './components/Act2'
 import Act3 from './components/Act3'
 import Ending from './components/Ending'
+import Questionnaire from './components/Questionnaire'
 
 const AppContent = () => {
   const { currentAct, musicEnabled } = useQuest()
@@ -51,6 +52,8 @@ const AppContent = () => {
         return <Act3 />
       case 4:
         return <Ending />
+      case 5:
+        return <Questionnaire />
       default:
         return <HomeScreen />
     }
@@ -78,7 +81,7 @@ const AppContent = () => {
       <div className="fixed top-4 left-4 right-4 z-20">
         <div className="bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg">
           <div className="flex justify-center space-x-2">
-            {[-1, 0, 1, 2, 3, 4].map((act) => (
+            {[-1, 0, 1, 2, 3, 4, 5].map((act) => (
               <div
                 key={act}
                 className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${

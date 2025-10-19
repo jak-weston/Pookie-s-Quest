@@ -138,12 +138,7 @@ const Ending = () => {
             className="space-y-4"
           >
             <div className="bg-gradient-to-r from-cozy-pink to-cozy-purple text-white p-4 rounded-lg mb-6">
-              <p className="font-semibold text-lg">Adventure Summary:</p>
-              <div className="text-sm mt-2 space-y-1">
-                <p>🍜 Act 1: Dinner Discovery - Completed!</p>
-                <p>🌊 Act 2: Wordle Challenge - Solved!</p>
-                <p>🎮 Act 3: Cozy Finale - Chosen!</p>
-              </div>
+              <p className="font-semibold text-lg">Quest Complete! 💕</p>
             </div>
 
             {/* Photo Gallery */}
@@ -177,7 +172,7 @@ const Ending = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={startPhotoBooth}
+                onClick={() => setCurrentAct(5)}
                 className="cozy-button w-full text-xl py-4 mb-4"
               >
                 📸 Photo Booth Memory
