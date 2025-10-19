@@ -57,9 +57,121 @@ const Ending = () => {
       month: 'long', 
       day: 'numeric' 
     })
+    const timeString = today.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit'
+    })
     
-    // Create a zip-like download (we'll create individual downloads with filters)
     photos.forEach((photo, index) => {
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      const img = new Image()
+      
+      img.onload = () => {
+        // Set canvas size
+        canvas.width = img.width
+        canvas.height = img.height
+        
+        // Draw original image
+        ctx.drawImage(img, 0, 0)
+        
+        // Apply filter based on act
+        let filterColor = 'rgba(255, 182, 193, 0.3)' // Default pink
+        let emoji = '💕'
+        let actName = 'Memory'
+        let stickerEmoji = '🍫' // Default chocolate
+        
+        switch(photo.act) {
+          case 'outfit':
+            filterColor = 'rgba(139, 69, 19, 0.25)' // Chocolate brown
+            emoji = '🍫'
+            actName = 'Outfit'
+            stickerEmoji = '🍫'
+            break
+          case 'dinner':
+            filterColor = 'rgba(255, 215, 0, 0.25)' // Golden
+            emoji = '🍜'
+            actName = 'Dinner'
+            stickerEmoji = '🍫'
+            break
+          case 'bay':
+            filterColor = 'rgba(135, 206, 235, 0.25)' // Sky blue
+            emoji = '🌊'
+            actName = 'Bay'
+            stickerEmoji = '🍫'
+            break
+          case 'finale':
+            filterColor = 'rgba(255, 192, 203, 0.25)' // Light pink
+            emoji = '🎮'
+            actName = 'Finale'
+            stickerEmoji = '🍫'
+            break
+        }
+        
+        // Apply color filter
+        ctx.fillStyle = filterColor
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        
+        // Add cute border
+        ctx.strokeStyle = '#8B4A8B'
+        ctx.lineWidth = 15
+        ctx.strokeRect(0, 0, canvas.width, canvas.height)
+        
+        // Add inner border
+        ctx.strokeStyle = '#FFB6C1'
+        ctx.lineWidth = 8
+        ctx.strokeRect(15, 15, canvas.width - 30, canvas.height - 30)
+        
+        // Add text overlay at top
+        ctx.fillStyle = '#8B4A8B'
+        ctx.font = 'bold 36px Poppins'
+        ctx.textAlign = 'center'
+        ctx.fillText(`${emoji} ${actName}`, canvas.width / 2, 60)
+        
+        // Add date and time
+        ctx.font = 'bold 24px Poppins'
+        ctx.fillText(`${dateString}`, canvas.width / 2, canvas.height - 80)
+        ctx.fillText(`${timeString}`, canvas.width / 2, canvas.height - 50)
+        
+        // Add cute stickers (Chococat and Pochacco)
+        ctx.font = '48px Arial'
+        ctx.textAlign = 'left'
+        
+        // Chococat sticker (top left)
+        ctx.fillText('🐱', 30, 100)
+        
+        // Pochacco sticker (top right)
+        ctx.fillText('🐶', canvas.width - 80, 100)
+        
+        // Chocolate sticker (bottom left)
+        ctx.fillText('🍫', 30, canvas.height - 30)
+        
+        // Heart sticker (bottom right)
+        ctx.fillText('💕', canvas.width - 80, canvas.height - 30)
+        
+        // Add "Pookie's Cozy Quest" text
+        ctx.fillStyle = '#8B4A8B'
+        ctx.font = 'bold 20px Poppins'
+        ctx.textAlign = 'center'
+        ctx.fillText('Pookie\'s Cozy Quest', canvas.width / 2, canvas.height - 20)
+        
+        // Create download
+        const link = document.createElement('a')
+        link.download = `pookie-cozy-quest-${actName.toLowerCase()}-${dateString.replace(/\s+/g, '-')}-${timeString.replace(/:/g, '-')}.png`
+        link.href = canvas.toDataURL('image/png', 1.0)
+        
+        // Trigger download
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      }
+      
+      img.src = photo.dataUrl
+    })
+  }
+
+  const downloadPhoto = () => {
+    if (canvasRef.current) {
       const canvas = document.createElement('canvas')
       const ctx = canvas.getContext('2d')
       const img = new Image()
@@ -71,60 +183,77 @@ const Ending = () => {
         // Draw original image
         ctx.drawImage(img, 0, 0)
         
-        // Add cute filter based on act
-        let filterColor = 'rgba(255, 182, 193, 0.3)' // Default pink
-        let emoji = '💕'
-        let actName = 'Memory'
-        
-        switch(photo.act) {
-          case 'outfit':
-            filterColor = 'rgba(139, 69, 19, 0.2)' // Chocolate brown
-            emoji = '🍫'
-            actName = 'Outfit'
-            break
-          case 'dinner':
-            filterColor = 'rgba(255, 215, 0, 0.2)' // Golden
-            emoji = '🍜'
-            actName = 'Dinner'
-            break
-          case 'bay':
-            filterColor = 'rgba(135, 206, 235, 0.2)' // Sky blue
-            emoji = '🌊'
-            actName = 'Bay'
-            break
-          case 'finale':
-            filterColor = 'rgba(255, 192, 203, 0.2)' // Light pink
-            emoji = '🎮'
-            actName = 'Finale'
-            break
-        }
-        
-        // Apply filter
-        ctx.fillStyle = filterColor
+        // Apply pink filter
+        ctx.fillStyle = 'rgba(255, 182, 193, 0.25)'
         ctx.fillRect(0, 0, canvas.width, canvas.height)
         
         // Add cute border
         ctx.strokeStyle = '#8B4A8B'
-        ctx.lineWidth = 20
+        ctx.lineWidth = 15
         ctx.strokeRect(0, 0, canvas.width, canvas.height)
+        
+        // Add inner border
+        ctx.strokeStyle = '#FFB6C1'
+        ctx.lineWidth = 8
+        ctx.strokeRect(15, 15, canvas.width - 30, canvas.height - 30)
         
         // Add text overlay
         ctx.fillStyle = '#8B4A8B'
-        ctx.font = 'bold 48px Poppins'
+        ctx.font = 'bold 36px Poppins'
         ctx.textAlign = 'center'
-        ctx.fillText(`${emoji} ${actName}`, canvas.width / 2, 80)
-        ctx.fillText(`Pookie's Cozy Quest`, canvas.width / 2, canvas.height - 100)
-        ctx.fillText(`${dateString}`, canvas.width / 2, canvas.height - 50)
+        ctx.fillText('📸 Photo Booth Memory', canvas.width / 2, 60)
         
-        // Download
+        // Add date and time
+        const today = new Date()
+        const dateString = today.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        })
+        const timeString = today.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+        
+        ctx.font = 'bold 24px Poppins'
+        ctx.fillText(`${dateString}`, canvas.width / 2, canvas.height - 80)
+        ctx.fillText(`${timeString}`, canvas.width / 2, canvas.height - 50)
+        
+        // Add cute stickers
+        ctx.font = '48px Arial'
+        ctx.textAlign = 'left'
+        
+        // Chococat sticker (top left)
+        ctx.fillText('🐱', 30, 100)
+        
+        // Pochacco sticker (top right)
+        ctx.fillText('🐶', canvas.width - 80, 100)
+        
+        // Chocolate sticker (bottom left)
+        ctx.fillText('🍫', 30, canvas.height - 30)
+        
+        // Heart sticker (bottom right)
+        ctx.fillText('💕', canvas.width - 80, canvas.height - 30)
+        
+        // Add "Pookie's Cozy Quest" text
+        ctx.fillStyle = '#8B4A8B'
+        ctx.font = 'bold 20px Poppins'
+        ctx.textAlign = 'center'
+        ctx.fillText('Pookie\'s Cozy Quest', canvas.width / 2, canvas.height - 20)
+        
+        // Create download
         const link = document.createElement('a')
-        link.download = `pookie-cozy-quest-${actName.toLowerCase()}-${dateString.replace(/\s+/g, '-')}.png`
-        link.href = canvas.toDataURL()
+        link.download = `pookie-cozy-quest-photobooth-${dateString.replace(/\s+/g, '-')}-${timeString.replace(/:/g, '-')}.png`
+        link.href = canvas.toDataURL('image/png', 1.0)
+        
+        // Trigger download
+        document.body.appendChild(link)
         link.click()
+        document.body.removeChild(link)
       }
       
-      img.src = photo.dataUrl
-    })
+      img.src = canvasRef.current.toDataURL()
+    }
   }
 
   const handleBack = () => {
