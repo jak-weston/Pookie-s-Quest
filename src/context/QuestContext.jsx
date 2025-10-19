@@ -1,0 +1,93 @@
+import React, { createContext, useContext, useState, useEffect } from 'react'
+
+const QuestContext = createContext()
+
+export const useQuest = () => {
+  const context = useContext(QuestContext)
+  if (!context) {
+    throw new Error('useQuest must be used within a QuestProvider')
+  }
+  return context
+}
+
+export const QuestProvider = ({ children }) => {
+  const [currentAct, setCurrentAct] = useState(() => {
+    const saved = localStorage.getItem('pookie-quest-act')
+    return saved ? parseInt(saved) : 0
+  })
+  
+  const [completedActs, setCompletedActs] = useState(() => {
+    const saved = localStorage.getItem('pookie-quest-completed')
+    return saved ? JSON.parse(saved) : []
+  })
+  
+  const [musicEnabled, setMusicEnabled] = useState(() => {
+    const saved = localStorage.getItem('pookie-quest-music')
+    return saved === 'true'
+  })
+  
+  const [wordleAttempts, setWordleAttempts] = useState(() => {
+    const saved = localStorage.getItem('pookie-quest-wordle')
+    return saved ? JSON.parse(saved) : []
+  })
+  
+  const [dinnerAnswer, setDinnerAnswer] = useState(() => {
+    const saved = localStorage.getItem('pookie-quest-dinner')
+    return saved || ''
+  })
+
+  useEffect(() => {
+    localStorage.setItem('pookie-quest-act', currentAct.toString())
+  }, [currentAct])
+
+  useEffect(() => {
+    localStorage.setItem('pookie-quest-completed', JSON.stringify(completedActs))
+  }, [completedActs])
+
+  useEffect(() => {
+    localStorage.setItem('pookie-quest-music', musicEnabled.toString())
+  }, [musicEnabled])
+
+  useEffect(() => {
+    localStorage.setItem('pookie-quest-wordle', JSON.stringify(wordleAttempts))
+  }, [wordleAttempts])
+
+  useEffect(() => {
+    localStorage.setItem('pookie-quest-dinner', dinnerAnswer)
+  }, [dinnerAnswer])
+
+  const completeAct = (actNumber) => {
+    if (!completedActs.includes(actNumber)) {
+      setCompletedActs(prev => [...prev, actNumber])
+    }
+    setCurrentAct(actNumber + 1)
+  }
+
+  const resetQuest = () => {
+    setCurrentAct(0)
+    setCompletedActs([])
+    setWordleAttempts([])
+    setDinnerAnswer('')
+    localStorage.clear()
+  }
+
+  const value = {
+    currentAct,
+    setCurrentAct,
+    completedActs,
+    completeAct,
+    musicEnabled,
+    setMusicEnabled,
+    wordleAttempts,
+    setWordleAttempts,
+    dinnerAnswer,
+    setDinnerAnswer,
+    resetQuest
+  }
+
+  return (
+    <QuestContext.Provider value={value}>
+      {children}
+    </QuestContext.Provider>
+  )
+}
