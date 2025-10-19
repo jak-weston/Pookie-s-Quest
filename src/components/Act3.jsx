@@ -33,6 +33,9 @@ const Act3 = () => {
         console.log('Adding photo data:', photoData)
         addPhoto(photoData)
         
+        // Reset the file input
+        event.target.value = ''
+        
         // Add a small delay to ensure photo is saved
         setTimeout(() => {
           console.log('Completing act 3')

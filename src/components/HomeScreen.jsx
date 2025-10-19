@@ -20,6 +20,10 @@ const HomeScreen = () => {
         
         addPhoto(photoData)
         setPhotoTaken(true)
+        
+        // Reset the file input
+        event.target.value = ''
+        
         setTimeout(() => {
           completeAct(0)
         }, 2000)

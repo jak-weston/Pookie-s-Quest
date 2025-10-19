@@ -50,6 +50,10 @@ const Act1 = () => {
         }
         
         addPhoto(photoData)
+        
+        // Reset the file input
+        event.target.value = ''
+        
         completeAct(1)
       }
       reader.readAsDataURL(file)
